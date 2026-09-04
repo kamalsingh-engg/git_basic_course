@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ company_name }} — Team Directory{% endblock %}
+{% block header %}{{ company_name }} — Team Directory{% endblock %}
+
+{% block content %}
+<p class="subtitle">{{ employees|length }} team members</p>
+
+<div class="card-grid">
+  {% for employee in employees %}
+  <article class="card">
+    <h2>{{ employee.name }}</h2>
+    <p class="meta"><strong>Role:</strong> {{ employee.role }}</p>
+    <p class="meta"><strong>Department:</strong> {{ employee.department }}</p>
+    <p class="meta"><strong>Email:</strong> {{ employee.email }}</p>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
