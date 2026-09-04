@@ -196,9 +196,111 @@ git push origin main
 
 ---
 
-## Part 7 — Wrap-up (5 min)
+## Part 7 — Checkout & switch (20 min)
 
-Run:
+### 7.1 Switch between branches
+
+```powershell
+git branch -a
+git switch feature/add-role-badge
+git switch main
+```
+
+Classic equivalent (same result):
+
+```powershell
+git checkout feature/add-role-badge
+git checkout main
+```
+
+### 7.2 View an old commit (detached HEAD)
+
+```powershell
+git log --oneline -5
+git switch --detach f1573ac
+# browse files, optionally run: python app.py
+git switch main
+```
+
+### 7.3 Restore one file from history
+
+```powershell
+git restore --source=f1573ac data.py
+git diff data.py
+git restore data.py
+```
+
+**Checkpoint:** You returned to `main` after detaching.
+
+---
+
+## Part 8 — Go back to a previous commit (25 min)
+
+### 8.1 View what changed
+
+```powershell
+git log --oneline --graph -10
+git show 09f1851
+```
+
+### 8.2 Undo a local commit with `reset` (practice branch only)
+
+```powershell
+git switch -c practice/reset-demo
+echo "# practice" >> README.md
+git add README.md
+git commit -m "Test commit to undo"
+git reset --soft HEAD~1
+git status
+git switch main
+git branch -d practice/reset-demo
+```
+
+### 8.3 Safe undo with `revert` (for pushed commits)
+
+```powershell
+git switch main
+git pull origin main
+git revert HEAD --no-edit
+```
+
+> On a protected `main` branch, open a PR for the revert instead of pushing directly.
+
+**Checkpoint:** You know `reset` = local rewrite, `revert` = safe on shared branches.
+
+---
+
+## Part 9 — GitHub Actions (30 min)
+
+### 9.1 Push the CI workflow via PR
+
+```powershell
+git switch main
+git pull origin main
+git switch -c feature/add-github-actions
+git add .github/workflows/ci.yml
+git commit -m "Add GitHub Actions CI workflow"
+git push -u origin feature/add-github-actions
+```
+
+Open **PR #3** on GitHub. Watch the **CI** check run (green ✓ or red ✗). Merge when it passes.
+
+### 9.2 Inspect a workflow run
+
+1. GitHub → **Actions** tab
+2. Click the latest **CI** run
+3. Expand **Smoke test Flask app** step to see output
+
+### 9.3 Optional — require CI before merge
+
+**Settings → Branches → rule for `main`:**
+
+- Require status checks to pass before merging
+- Select the **test** job from the CI workflow
+
+---
+
+## Part 10 — Wrap-up (5 min)
 
 ```powershell
 git log --oneline --graph --all -15
@@ -211,6 +313,9 @@ git branch -a
 2. Why use a branch before opening a PR?
 3. What does `git pull` do after someone merges your PR on GitHub?
 4. What do `<<<<<<<` lines mean?
+5. `git switch` vs `git checkout` — when are they the same?
+6. When do you use `git revert` instead of `git reset --hard`?
+7. What triggers the CI workflow in `.github/workflows/ci.yml`?
 
 ---
 
@@ -219,3 +324,4 @@ git branch -a
 - Add `feature/employee-count` — show total employees in header
 - Use `git stash` before switching branches with dirty working tree
 - Tag a release: `git tag v1.0.0` and `git push origin v1.0.0`
+- Add a lint step to GitHub Actions (`pip install ruff && ruff check .`)
