@@ -1,6 +1,6 @@
 """Dummy employee data for the Git workshop."""
 
-COMPANY_NAME = "Acme Corp"
+COMPANY_NAME = "Acme Corporation"
 
 EMPLOYEES = [
     {
