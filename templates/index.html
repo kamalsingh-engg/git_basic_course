@@ -9,7 +9,7 @@
 <div class="card-grid">
   {% for employee in employees %}
   <article class="card">
-    <h2>{{ employee.name }}</h2>
+    <h2>{{ employee.name }}<span class="badge">{{ employee.role }}</span></h2>
     <p class="meta"><strong>Role:</strong> {{ employee.role }}</p>
     <p class="meta"><strong>Department:</strong> {{ employee.department }}</p>
     <p class="meta"><strong>Email:</strong> {{ employee.email }}</p>
