@@ -68,3 +68,11 @@ body {
   margin-left: 0.5rem;
   vertical-align: middle;
 }
+
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  color: #666;
+  margin-top: 2rem;
+  border-top: 1px solid #ddd;
+}
